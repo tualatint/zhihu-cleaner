@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>知乎净化器</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="head">
+    <div class="title">
+      <h1>知乎净化器</h1>
+      <span id="status" class="status muted">检查中…</span>
+    </div>
+  </header>
+
+  <main>
+    <ul id="toggles" class="toggles"></ul>
+
+    <details class="keywords">
+      <summary>低质内容关键词<span id="kw-count" class="badge">0</span></summary>
+      <textarea id="keywords" rows="6" spellcheck="false"
+        placeholder="每行一个，命中卡片标题即隐藏"></textarea>
+      <p class="hint">命中信息流 / 搜索卡片「标题」的词，每行一个。</p>
+    </details>
+
+    <details class="diagnose" id="diagnose">
+      <summary>诊断 / 反馈<span class="badge" id="hidden-badge">0</span></summary>
+      <div class="diag-actions">
+        <button id="diag-run" type="button" class="btn btn-sm">生成报告</button>
+        <button id="diag-copy" type="button" class="btn btn-sm" disabled>复制</button>
+      </div>
+      <pre id="diag-out" tabindex="0">点击「生成报告」，把结果贴给开发者即可定位没被清掉的内容。</pre>
+    </details>
+  </main>
+
+  <footer class="foot">
+    <span id="stats" class="stats">—</span>
+    <button id="rescan" type="button" class="btn">重新扫描</button>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>
