@@ -24,7 +24,7 @@
   if (window.__zhcLoaded__) return;
   window.__zhcLoaded__ = true;
 
-  const VERSION = '1.3.0';
+  const VERSION = '1.4.0';
   const STYLE_ID = 'zhc-style';
   const HIDDEN_CLASS = 'zhc-hidden';
   const MARK_ATTR = 'data-zhc-hidden';
@@ -37,6 +37,7 @@
     search: true,
     recommend: true,
     video: true,
+    sidebar: true,
     lowquality: true,
     keywords: [
       '震惊', '速看', '全网都', '万万没想到', '绝了',
@@ -134,6 +135,23 @@
       '.VideoAnswerPlayer',
       '[data-za-detail-view-path-module="VideoList"]',
       '[data-za-module="ZVideoItem"]'
+    ],
+    sidebar: [
+      // 各页面的右侧栏（推荐关注 / 盐言作者平台 / 创作中心 / 付费咨询 / 知乎知学堂 等都在这里）
+      '.Question-sideColumn',
+      '.Question-sideColumn--sticky',
+      '.Topstory-sideColumn',
+      '.SearchSideBar',
+      '.Search-resultSide',
+      '.SearchResult-side',
+      '.AppSideBar',
+      '.UserSideBar',
+      '.Profile-sideColumn',
+      // 类名改版兜底（sideColumn / SideBar / Sidebar 三种拼写都覆盖）
+      '[class*="sideColumn"]',
+      '[class*="SideColumn"]',
+      '[class*="SideBar"]',
+      '[class*="Sidebar"]'
     ]
   };
 

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "知乎净化器",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "移除知乎的广告、热榜/热搜、推荐信息流、视频流，以及关键词命中的低质内容。",
   "browser_specific_settings": {
     "gecko": {

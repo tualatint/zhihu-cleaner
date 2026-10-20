@@ -7,6 +7,7 @@ const DEFAULT_SETTINGS = {
   search: true,
   recommend: true,
   video: true,
+  sidebar: true,
   lowquality: true,
   keywords: [
     '震惊', '速看', '全网都', '万万没想到', '绝了',
@@ -23,6 +24,7 @@ const TOGGLES = [
   { key: 'search',     label: '搜索推荐',      hint: '大家都在搜、搜索框提示' },
   { key: 'recommend',  label: '推荐内容',      hint: '相关推荐、推荐阅读' },
   { key: 'video',      label: '视频信息流',    hint: '视频卡片、短视频' },
+  { key: 'sidebar',    label: '右侧栏',        hint: '推荐关注、创作中心等整列' },
   { key: 'lowquality', label: '低质内容',      hint: '按关键词隐藏标题党' }
 ];
 

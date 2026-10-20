@@ -55,6 +55,22 @@ const laterMarkup = `
     <ul><li><a href="#">词三</a></li><li><a href="#">词四</a></li></ul>
   </div>
 
+  <!-- 10) 右栏：推荐关注 / 盐言作者平台 / 创作中心 / 付费咨询 / 知乎知学堂 -->
+  <div class="Question-sideColumn" id="rightcol">
+    <div class="Card">
+      <div class="Card-header">推荐关注</div>
+      <a href="#">盐言作者平台</a>
+      <a href="#">创作中心</a>
+      <a href="#">付费咨询</a>
+      <a href="#">知乎知学堂</a>
+    </div>
+  </div>
+
+  <!-- 10b) 类名是其他拼写的右栏，走兜底选择器 -->
+  <aside class="SearchSidebar" id="rightcol2">
+    <a href="#">推荐关注</a>
+  </aside>
+
   <!-- 9) 搜索框：占位 / 推荐提示文字 -->
   <div class="SearchBar">
     <input class="SearchBar-input" id="q" type="text" placeholder="大家都在搜：某热点话题">
@@ -127,7 +143,9 @@ const laterMarkup = `
     ['搜索下拉的“大家都在搜”', hidden('dajia-drop'), true],
     ['热榜模块整体（标题+列表）', hidden('hotmod'), true],
     ['标题命中关键词的卡片', hidden('lowq'), true],
-    ['正常问答卡片（必须保留）', hidden('normal'), false]
+    ['正常问答卡片（必须保留）', hidden('normal'), false],
+    ['右栏 .Question-sideColumn', hidden('rightcol'), true],
+    ['类名含 Sidebar 的右栏', hidden('rightcol2'), true]
   ];
 
   let failed = 0;
