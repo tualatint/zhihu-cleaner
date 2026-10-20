@@ -8,3 +8,7 @@ package-lock.json
 # 编辑器 / 系统
 .DS_Store
 *.swp
+
+# 千万别把 AMO 凭据提交进来（脚本默认读 ~/.amo-keys）
+.amo-keys
+amo-keys

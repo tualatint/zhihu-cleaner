@@ -32,7 +32,41 @@
 
 ## 安装
 
-### 临时加载（开发 / 自用，重启浏览器后失效）
+### 永久安装（推荐）：签名一次，重启不丢
+
+Firefox **正式版强制要求扩展签名**，未签名只能用「临时载入」，重启就没了。
+解决办法是走 AMO 的 **unlisted**（不公开上架）渠道签一次名 —— 免费，扩展不会
+出现在搜索结果里，但装进浏览器后是永久的。
+
+1. 注册 / 登录 [addons.mozilla.org](https://addons.mozilla.org/)，在
+   <https://addons.mozilla.org/developers/addon/api/key/> 生成 API key 与 secret
+2. 把凭据写进 `~/.amo-keys`（避免密钥进入 shell 历史）：
+
+   ```bash
+   cat > ~/.amo-keys <<'EOF'
+   WEB_EXT_API_KEY=你的key
+   WEB_EXT_API_SECRET=你的secret
+   EOF
+   chmod 600 ~/.amo-keys
+   ```
+
+3. 签名：
+
+   ```bash
+   tools/sign.sh
+   ```
+
+4. **永久安装**：`about:addons` → 右上角齿轮 → **从文件安装附加组件…** →
+   选中 `dist/` 下新出现的 `.xpi`
+
+之后重启 Firefox 扩展都还在。升级时改 `manifest.json` 里的 `version` 再跑一次
+`tools/sign.sh`、重新安装即可。
+
+> 不想注册 AMO 的话，另一条路是换用 **Firefox Developer Edition / Nightly**，
+> 在 `about:config` 把 `xpinstall.signatures.required` 设为 `false`，
+> 就能永久安装未签名的 xpi（`tools/sign.sh` 不需要凭据也能构建产物）。
+
+### 临时加载（开发调试用，重启浏览器后失效）
 
 1. 打开 Firefox，地址栏输入 `about:debugging#/runtime/this-firefox`
 2. 点击 **临时载入附加组件 / Load Temporary Add-on…**
@@ -41,7 +75,7 @@
 
 > 载入后已经打开的知乎页面需要刷新一次，content script 才会注入。
 
-### 打包成 xpi
+### 打包成 xpi（不签名）
 
 `dist/` 是构建产物（未纳入版本控制），用下面的命令生成：
 
@@ -52,13 +86,7 @@ npx web-ext build --source-dir . --artifacts-dir dist --overwrite-dest \
 ```
 
 未签名的 xpi 只能在 Developer Edition / Nightly 里永久安装
-（`xpinstall.signatures.required = false`）。要在正式版里长期使用需要用
-[web-ext](https://extensionworkshop.com/documentation/develop/web-ext-command-reference/)
-签名：
-
-```bash
-npx web-ext sign --api-key=... --api-secret=...
-```
+（`xpinstall.signatures.required = false`）。
 
 ## 测试
 
@@ -117,6 +145,8 @@ zhihu-cleaner/
 ├── test/
 │   └── content-rules.test.js   # jsdom 规则自测
 ├── icons/                 # 由 tools/make-icons.py 生成
-├── tools/make-icons.py
-└── dist/                  # 构建产物（.gitignore，由 web-ext build 生成）
+├── tools/
+│   ├── make-icons.py      # 生成图标
+│   └── sign.sh            # 走 AMO unlisted 渠道签名（永久安装用）
+└── dist/                  # 构建产物（.gitignore，由 web-ext build/sign 生成）
 ```
