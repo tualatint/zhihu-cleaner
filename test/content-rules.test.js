@@ -159,6 +159,18 @@ const laterMarkup = `
   console.log(`${style ? 'PASS' : 'FAIL'}  ${'注入 <style>'.padEnd(34)}`);
   if (!style) failed++;
 
+  // 知乎的右栏类名是 css-xxxx 这类哈希（实测首页/问题页都是），
+  // 所以必须有一条基于 data 属性的兜底，否则右栏根本不会被命中。
+  const css = style ? style.textContent : '';
+  const attrOk = css.includes('[data-za-detail-view-path-module="RightSideBar"]');
+  console.log(`${attrOk ? 'PASS' : 'FAIL'}  ${'右栏用 data 属性兜底'.padEnd(34)}`);
+  if (!attrOk) failed++;
+
+  // 右栏隐藏后主列要补满：首页主列是固定 694px，不补会在右边留一条空洞
+  const growOk = css.includes('.Topstory-mainColumn');
+  console.log(`${growOk ? 'PASS' : 'FAIL'}  ${'右栏隐藏后主列补满'.padEnd(34)}`);
+  if (!growOk) failed++;
+
   // 搜索框占位提示文字
   const q = window.document.getElementById('q');
   const phOk = !!q && q.placeholder === '';

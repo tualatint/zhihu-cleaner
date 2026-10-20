@@ -137,6 +137,9 @@
       '[data-za-module="ZVideoItem"]'
     ],
     sidebar: [
+      // 最可靠的一条：知乎给右栏挂了分析用的 data 属性，类名全是 css-xxxx 哈希、
+      // 每次发版都变，但这个属性是稳定的（首页 / 问题页 / 搜索页均已实测）。
+      '[data-za-detail-view-path-module="RightSideBar"]',
       // 各页面的右侧栏（推荐关注 / 盐言作者平台 / 创作中心 / 付费咨询 / 知乎知学堂 等都在这里）
       '.Question-sideColumn',
       '.Question-sideColumn--sticky',
@@ -217,6 +220,15 @@
 
   /* ------------------------------- 样式 ------------------------------- */
 
+  /** 隐藏之后需要的布局修补（原始 CSS 片段，按开关分组） */
+  const LAYOUT = {
+    sidebar: [
+      // 右栏隐藏后让首页主列补满：知乎问题页的主列本来就写着 flex:1 1 0%，
+      // 右栏一没就会自动铺满；首页主列却是固定 694px，不补的话右边会留一条空洞。
+      '.Topstory-mainColumn{flex:1 1 auto!important;width:auto!important;max-width:none!important}'
+    ]
+  };
+
   function buildCss(s) {
     // 每个选择器单独一条规则：个别选择器不被支持时只影响它自己
     const chunks = ['.' + HIDDEN_CLASS + '{display:none!important}'];
@@ -225,6 +237,10 @@
       for (const sel of SELECTORS[key]) {
         chunks.push(sel + '{display:none!important}');
       }
+    }
+    for (const key of Object.keys(LAYOUT)) {
+      if (!s[key]) continue;
+      chunks.push(...LAYOUT[key]);
     }
     return chunks.join('\n');
   }
